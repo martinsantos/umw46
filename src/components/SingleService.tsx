@@ -1,6 +1,7 @@
 import { ArrowLeft, Shield, Cloud, BarChart, Code, Smartphone, Database } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import React from 'react';
+import { useState, useEffect } from 'react';
 
 const serviceIcons: Record<string, React.ElementType> = {
   'Ciberseguridad': Shield,
@@ -54,6 +55,36 @@ const SingleService: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const service = serviceData.find((service) => service.id === parseInt(id || '', 10));
 
+  const [dynamicText, setDynamicText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const textArray = [
+    'Protegemos tu negocio.',
+    'Soluciones avanzadas.',
+    'Tu seguridad, nuestra prioridad.',
+  ];
+
+  useEffect(() => {
+    const handleTyping = () => {
+      const currentText = textArray[currentIndex % textArray.length];
+      if (!isDeleting) {
+        setDynamicText(currentText.substring(0, dynamicText.length + 1));
+        if (dynamicText === currentText) {
+          setTimeout(() => setIsDeleting(true), 1000);
+        }
+      } else {
+        setDynamicText(currentText.substring(0, dynamicText.length - 1));
+        if (dynamicText === '') {
+          setIsDeleting(false);
+          setCurrentIndex((prevIndex) => prevIndex + 1);
+        }
+      }
+    };
+
+    const timer = setTimeout(handleTyping, isDeleting ? 50 : 150);
+    return () => clearTimeout(timer);
+  }, [dynamicText, isDeleting, currentIndex, textArray]);
+
   if (!service) {
     return <p>Servicio no encontrado.</p>;
   }
@@ -86,6 +117,10 @@ const SingleService: React.FC = () => {
 
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="p-6">
+            <div className="text-center mb-6">
+              <h1 className="text-4xl font-bold text-red-500 animate-typing">{dynamicText}</h1>
+            </div>
+
             <div className="flex items-center mb-4">
               {Icon && <Icon className="text-red-500 mr-4" size={48} />}
               <h1 className="text-3xl font-bold text-gray-800">{service.name}</h1>
