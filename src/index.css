@@ -27,3 +27,47 @@ h1, h2, h3, h4, h5, h6 {
 .leading-relaxed {
   line-height: 1.6;
 }
+
+:root {
+  --primary-color: #3b82f6;
+  --secondary-color: #10b981;
+  --dark-color: #1f2937;
+  --light-color: #f3f4f6;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-typing {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 0.15em solid var(--primary-color);
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 2s ease-in-out 3.5s forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 1s ease-out 4.5s forwards;
+}
