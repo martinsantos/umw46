@@ -7,6 +7,8 @@ import Services from './pages/Services'
 import CaseStudies from './pages/CaseStudies'
 import Contact from './pages/Contact'
 import About from './pages/About'
+import SingleCase from './components/SingleCase'; // Importa el componente SingleCase
+import SingleService from './components/SingleService'; // Importa el componente SingleService
 
 function App() {
   return (
@@ -19,7 +21,8 @@ function App() {
             <Route path="/servicios" element={<Services />} />
             <Route path="/casos-de-exito" element={<CaseStudies />} />
             <Route path="/contacto" element={<Contact />} />
-            <Route path="/nosotros" element={<About />} />
+            <Route path="/servicios/:id" element={<SingleService />} />
+            <Route path="/casos-de-exito/:id" element={<SingleCase />} />    <Route path="/nosotros" element={<About />} />
           </Routes>
         </main>
         <Footer />
